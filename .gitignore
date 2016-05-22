@@ -22,3 +22,10 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+README.html
+
+*.sublime-workspace
+*.sublime-project
+.idea
+*.iml
