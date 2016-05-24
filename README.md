@@ -32,10 +32,11 @@ You may use `templify mytemplate.file` directly on the command line.
 
 ##Switches
 
-Usage of templify: `templify [switches] templatefilename`
-  -o string
-    	name of output file. Defaults to name of template file excluding extension + '.go'
-  -p string
-    	name of package to be used in generated code (default "main")
+Usage of templify: `templify [switches] templatefilename`<br>
+  -o string<br>
+    	&nbsp;&nbsp;&nbsp;name of output file. Defaults to name of template file excluding extension + '.go'
+    	
+  -p string<br>
+    	&nbsp;&nbsp;&nbsp;name of package to be used in generated code (default "main")
 
 
