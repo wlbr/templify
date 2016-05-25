@@ -1,9 +1,12 @@
 package main
 
+//go:generate templify -p main -o embed.go embed.tpl
+
 import (
 	"errors"
 	"flag"
 	"fmt"
+	"go/format"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -13,6 +16,7 @@ import (
 var pckg string
 var tmpl string
 var out string
+var frmt bool
 
 const embedtpl = "embed.tpl"
 
@@ -23,7 +27,7 @@ func init() {
 func flagging() {
 	flag.StringVar(&pckg, "p", "main", "name of package to be used in generated code")
 	flag.StringVar(&out, "o", "", "name of output file. Defaults to name of template file + '.go'")
-
+	flag.BoolVar(&frmt, "n", false, "do not format the generated source. Default false means source will be formatted.")
 	flag.Parse()
 
 	tmpl = flag.Arg(0)
@@ -33,17 +37,17 @@ func flagging() {
 	}
 }
 
-func readTemplifyTemplate(tplname string) *template.Template {
+func readTemplifyTemplate(tplname string) (*template.Template, error) {
 	tpl, err := template.ParseFiles(tplname)
 	if err != nil {
 		fmt.Printf("Error reading templifytemplate file '%s'\n%v", tplname, err)
-		os.Exit(1)
 	}
-	return tpl
+	return tpl, err
 }
 
-const embedTemplate = "/*\n" +
+const internalTemplate = "/*\n" +
 	"* CODE GENERATED AUTOMATICALLY WITH github.com/wlbr/templify\n" +
+	"* using the internal, hardcoded template.\n" +
 	"* THIS FILE SHOULD NOT BE EDITED BY HAND\n" +
 	"*/\n" +
 	"\n" +
@@ -61,17 +65,41 @@ func readTargetTemplate(tplname string) string {
 		fmt.Printf("Error reading target template file '%s'\n%v", tplname, err)
 		os.Exit(1)
 	}
-	/*stpl := string(tpl)
-	stpl = strings.Replace(stpl, "\"", "\\\"", -1)
-	stpl = strings.Replace(stpl, "\n", "\\n\" +\n\"", -1)*/
 
-	return string(tpl)
+	r := strings.NewReplacer("\"", "\\\"", "\n", "\\n\" +\n\t\"", "\t", "\\t")
+	return r.Replace(string(tpl))
+
+}
+
+func formatFile(fname string) {
+	fstr, err := ioutil.ReadFile(out)
+	if err != nil {
+		fmt.Printf("Error reading generated file %s before passing it to gofmt.\n%v\n", out, err)
+		os.Exit(1)
+	} else {
+		fstr, err = format.Source(fstr)
+		if err != nil {
+			fmt.Printf("Error running gofmt on the generated file '%s'\n%v\n", out, err)
+			os.Exit(1)
+		} else {
+			foutfile, err := os.Create(out)
+			if err != nil {
+				fmt.Printf("Error creating formatted target file '%s'\n%v\n", out, err)
+				os.Exit(1)
+			} else {
+				defer foutfile.Close()
+				fmt.Fprintf(foutfile, "%s", fstr)
+			}
+		}
+	}
 }
 
 func main() {
 	flagging()
-	//tpl := readTemplifyTemplate(embedtpl)
-	tpl, err := template.New("embed").Parse(embedTemplate)
+	// tpl, err := readTemplifyTemplate(embedtpl)
+	tpl, err := template.New("embed").Parse(embedTemplate())
+
+	//tpl, err := template.New("embed").Parse(internalTemplate)
 	if err != nil {
 		fmt.Printf("Error parsing code generation template\n%v", err)
 		os.Exit(1)
@@ -98,4 +126,7 @@ func main() {
 	defer outfile.Close()
 	tpl.Execute(outfile, data)
 
+	if !frmt {
+		formatFile(out)
+	}
 }

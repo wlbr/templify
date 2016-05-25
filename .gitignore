@@ -29,3 +29,5 @@ README.html
 *.sublime-project
 .idea
 *.iml
+
+templify
