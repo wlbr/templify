@@ -38,5 +38,7 @@ Usage of templify: `templify [switches] templatefilename`<br>
     	
   -p string<br>
     	&nbsp;&nbsp;&nbsp;name of package to be used in generated code (default "main")
-
-
+  
+  -n <br>
+    	&nbsp;&nbsp;&nbsp;no formatting of the generated source. Default false means source will be formatted with gofmt.
+    	
