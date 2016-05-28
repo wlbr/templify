@@ -1,8 +1,4 @@
 
-#export GOOS=linux
-#export GOARCH=amd64
-
-	
 all: generate build
 
 .PHONY: clean
@@ -10,6 +6,7 @@ clean:
 	echo clean 
 	rm -f embed.go
 	rm -f templify
+	rm -f example/ex.go
 
 
 generate: embed.tpl

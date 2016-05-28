@@ -15,24 +15,22 @@ import (
 )
 
 var pckg string
-
 var inputfile string
-var out string
+var outfilename string
 var tmplname string
 var frmt bool
+var exp bool
 
 const embedtpl = "embed.tpl"
 
-func init() {
-
-}
-
 func flagging() {
 	flag.StringVar(&pckg, "p", "main", "name of package to be used in generated code")
-	flag.StringVar(&out, "o", "", "name of output file. Defaults to name of template file + '.go'")
+	flag.StringVar(&outfilename, "o", "", "name of output file. Defaults to name of template file + '.go'")
 	flag.StringVar(&tmplname, "t", "", "name of generated, the template returning function. Its name will have "+
-		"'Template' attached. Will be set to `basename outputfile` if empty (default).")
+		"'Template' attached. Will be set to $(basename -s .ext outputfile) if empty (default).")
 	flag.BoolVar(&frmt, "n", false, "do not format the generated source. Default false means source will be formatted.")
+	flag.BoolVar(&exp, "e", false, "export the genrated, the template returning function. "+
+		"Default (false) means the function will not be exported.")
 	flag.Parse()
 
 	inputfile = flag.Arg(0)
@@ -41,18 +39,21 @@ func flagging() {
 		os.Exit(1)
 	}
 
-	if out == "" {
+	if outfilename == "" {
 		indir := path.Dir(inputfile)
 		inext := path.Ext(path.Base(inputfile))
 		inname := strings.TrimSuffix(path.Base(inputfile), inext)
-		out = fmt.Sprintf("%s/%s.go", indir, inname)
+		outfilename = fmt.Sprintf("%s/%s.go", indir, inname)
 	}
 
 	if tmplname == "" {
-		ext := path.Ext(path.Base(out))
-		tmplname = strings.TrimSuffix(path.Base(out), ext)
+		ext := path.Ext(path.Base(outfilename))
+		tmplname = strings.TrimSuffix(path.Base(outfilename), ext)
 	}
 
+	if exp {
+		tmplname = strings.ToUpper(tmplname[0:1]) + tmplname[1:]
+	}
 }
 
 func readTemplifyTemplate(tplname string) (*template.Template, error) {
@@ -90,19 +91,19 @@ func readTargetTemplate(tplname string) string {
 }
 
 func formatFile(fname string) {
-	fstr, err := ioutil.ReadFile(out)
+	fstr, err := ioutil.ReadFile(outfilename)
 	if err != nil {
-		fmt.Printf("Error reading generated file %s before passing it to gofmt.\n%v\n", out, err)
+		fmt.Printf("Error reading generated file %s before passing it to gofmt.\n%v\n", outfilename, err)
 		os.Exit(1)
 	} else {
 		fstr, err = format.Source(fstr)
 		if err != nil {
-			fmt.Printf("Error running gofmt on the generated file '%s'\n%v\n", out, err)
+			fmt.Printf("Error running gofmt on the generated file '%s'\n%v\n", outfilename, err)
 			os.Exit(1)
 		} else {
-			foutfile, err := os.Create(out)
+			foutfile, err := os.Create(outfilename)
 			if err != nil {
-				fmt.Printf("Error creating formatted target file '%s'\n%v\n", out, err)
+				fmt.Printf("Error creating formatted target file '%s'\n%v\n", outfilename, err)
 				os.Exit(1)
 			} else {
 				defer foutfile.Close()
@@ -134,18 +135,18 @@ func main() {
 	}
 	data.Tmplcontent = readTargetTemplate(inputfile)
 
-	if out == "" {
-		out = strings.Split(inputfile, ".")[0] + ".go"
+	if outfilename == "" {
+		outfilename = strings.Split(inputfile, ".")[0] + ".go"
 	}
-	outfile, err := os.Create(out)
+	outfile, err := os.Create(outfilename)
 	if err != nil {
-		fmt.Printf("Error creating target file '%s'\n%v\n", out, err)
+		fmt.Printf("Error creating target file '%s'\n%v\n", outfilename, err)
 		os.Exit(1)
 	}
 	defer outfile.Close()
 	tpl.Execute(outfile, data)
 
 	if !frmt {
-		formatFile(out)
+		formatFile(outfilename)
 	}
 }

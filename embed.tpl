@@ -6,8 +6,7 @@
 
 package {{.Pckg}}
 
-var {{.Tmplname}}tmpl = "{{.Tmplcontent}}"
-
 func {{.Tmplname}}Template() string {
-	return {{.Tmplname}}tmpl
+	var tmpl = "{{.Tmplcontent}}"
+	return tmpl
 }
