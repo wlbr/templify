@@ -9,13 +9,16 @@ import (
 	"go/format"
 	"io/ioutil"
 	"os"
+	"path"
 	"strings"
 	"text/template"
 )
 
 var pckg string
-var tmpl string
+
+var inputfile string
 var out string
+var tmplname string
 var frmt bool
 
 const embedtpl = "embed.tpl"
@@ -27,14 +30,29 @@ func init() {
 func flagging() {
 	flag.StringVar(&pckg, "p", "main", "name of package to be used in generated code")
 	flag.StringVar(&out, "o", "", "name of output file. Defaults to name of template file + '.go'")
+	flag.StringVar(&tmplname, "t", "", "name of generated, the template returning function. Its name will have "+
+		"'Template' attached. Will be set to `basename outputfile` if empty (default).")
 	flag.BoolVar(&frmt, "n", false, "do not format the generated source. Default false means source will be formatted.")
 	flag.Parse()
 
-	tmpl = flag.Arg(0)
-	if tmpl == "" {
+	inputfile = flag.Arg(0)
+	if inputfile == "" {
 		fmt.Println(errors.New("No template file given as argument."))
 		os.Exit(1)
 	}
+
+	if out == "" {
+		indir := path.Dir(inputfile)
+		inext := path.Ext(path.Base(inputfile))
+		inname := strings.TrimSuffix(path.Base(inputfile), inext)
+		out = fmt.Sprintf("%s/%s.go", indir, inname)
+	}
+
+	if tmplname == "" {
+		ext := path.Ext(path.Base(out))
+		tmplname = strings.TrimSuffix(path.Base(out), ext)
+	}
+
 }
 
 func readTemplifyTemplate(tplname string) (*template.Template, error) {
@@ -96,10 +114,11 @@ func formatFile(fname string) {
 
 func main() {
 	flagging()
+
 	// tpl, err := readTemplifyTemplate(embedtpl)
 	tpl, err := template.New("embed").Parse(embedTemplate())
-
 	//tpl, err := template.New("embed").Parse(internalTemplate)
+
 	if err != nil {
 		fmt.Printf("Error parsing code generation template\n%v", err)
 		os.Exit(1)
@@ -111,12 +130,12 @@ func main() {
 		Tmplcontent string
 	}{
 		Pckg:     pckg,
-		Tmplname: strings.Split(tmpl, ".")[0],
+		Tmplname: strings.Split(tmplname, ".")[0],
 	}
-	data.Tmplcontent = readTargetTemplate(tmpl)
+	data.Tmplcontent = readTargetTemplate(inputfile)
 
 	if out == "" {
-		out = strings.Split(tmpl, ".")[0] + ".go"
+		out = strings.Split(inputfile, ".")[0] + ".go"
 	}
 	outfile, err := os.Create(out)
 	if err != nil {
