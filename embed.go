@@ -13,10 +13,10 @@ func embedTemplate() string {
 		" * THIS FILE SHOULD NOT BE EDITED BY HAND\n" +
 		" */\n" +
 		"\n" +
-		"package {{.Pckg}}\n" +
+		"package {{.Package}}\n" +
 		"\n" +
-		"func {{.Tmplname}}Template() string {\n" +
-		"\tvar tmpl = \"{{.Tmplcontent}}\"\n" +
+		"func {{.Name}}Template() string {\n" +
+		"\tvar tmpl = \"{{.Content}}\"\n" +
 		"\treturn tmpl\n" +
 		"}\n" +
 		""

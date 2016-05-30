@@ -4,9 +4,9 @@
  * THIS FILE SHOULD NOT BE EDITED BY HAND
  */
 
-package {{.Pckg}}
+package {{.Package}}
 
-func {{.Tmplname}}Template() string {
-	var tmpl = "{{.Tmplcontent}}"
+func {{.Name}}Template() string {
+	var tmpl = "{{.Content}}"
 	return tmpl
 }

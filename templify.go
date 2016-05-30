@@ -17,6 +17,7 @@ import (
 var pckg string
 var inputfile string
 var outfilename string
+var functionname string
 var tmplname string
 var frmt bool
 var exp bool
@@ -26,8 +27,10 @@ const embedtpl = "embed.tpl"
 func flagging() {
 	flag.StringVar(&pckg, "p", "main", "name of package to be used in generated code")
 	flag.StringVar(&outfilename, "o", "", "name of output file. Defaults to name of template file + '.go'")
-	flag.StringVar(&tmplname, "t", "", "name of generated, the template returning function. Its name will have "+
-		"'Template' attached. Will be set to $(basename -s .ext outputfile) if empty (default).")
+	flag.StringVar(&functionname, "f", "", "name of generated, the template returning function. Its name will "+
+		"have 'Template' attached. Will be set to $(basename -s .ext outputfile) if empty (default).")
+	flag.StringVar(&tmplname, "t", "", "name of alternate code generation template file. If empty (default=, "+
+		"then the embedded template will be used. Template variables supplied are: .Name, .Package, .Content")
 	flag.BoolVar(&frmt, "n", false, "do not format the generated source. Default false means source will be formatted.")
 	flag.BoolVar(&exp, "e", false, "export the genrated, the template returning function. "+
 		"Default (false) means the function will not be exported.")
@@ -46,13 +49,13 @@ func flagging() {
 		outfilename = fmt.Sprintf("%s/%s.go", indir, inname)
 	}
 
-	if tmplname == "" {
+	if functionname == "" {
 		ext := path.Ext(path.Base(outfilename))
-		tmplname = strings.TrimSuffix(path.Base(outfilename), ext)
+		functionname = strings.TrimSuffix(path.Base(outfilename), ext)
 	}
 
 	if exp {
-		tmplname = strings.ToUpper(tmplname[0:1]) + tmplname[1:]
+		functionname = strings.ToUpper(functionname[0:1]) + functionname[1:]
 	}
 }
 
@@ -116,8 +119,16 @@ func formatFile(fname string) {
 func main() {
 	flagging()
 
-	// tpl, err := readTemplifyTemplate(embedtpl)
-	tpl, err := template.New("embed").Parse(embedTemplate())
+	var tpl *template.Template
+	var err error
+
+	if tmplname != "" {
+		tpl, err = readTemplifyTemplate(tmplname)
+
+	} else {
+		tpl, err = template.New("embed").Parse(embedTemplate())
+	}
+
 	//tpl, err := template.New("embed").Parse(internalTemplate)
 
 	if err != nil {
@@ -126,14 +137,14 @@ func main() {
 	}
 
 	data := struct {
-		Pckg        string
-		Tmplname    string
-		Tmplcontent string
+		Package string
+		Name    string
+		Content string
 	}{
-		Pckg:     pckg,
-		Tmplname: strings.Split(tmplname, ".")[0],
+		Package: pckg,
+		Name:    strings.Split(functionname, ".")[0],
 	}
-	data.Tmplcontent = readTargetTemplate(inputfile)
+	data.Content = readTargetTemplate(inputfile)
 
 	if outfilename == "" {
 		outfilename = strings.Split(inputfile, ".")[0] + ".go"
