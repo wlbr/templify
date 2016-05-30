@@ -36,17 +36,19 @@ Usage of templify: `templify [switches] templatefilename`<br>
    -e	<br>
       &nbsp;&nbsp;&nbsp;export the generated, the template returning function. Default (false) means the function will not be exported.
   
-   -n <br>
+   -f <br>
     	&nbsp;&nbsp;&nbsp;no formatting of the generated source. Default false means source will be formatted with gofmt.
   
-   -o string<br>
-    	&nbsp;&nbsp;&nbsp;name of output file. Defaults to name of template file excluding extension + '.go'
-  
-   -p string<br>
-    	&nbsp;&nbsp;&nbsp;name of package to be used in generated code (default "main")
-    	
-   -t string<br>
+   -n string<br>
       &nbsp;&nbsp;&nbsp;
     	name of generated, the template returning function. Its name will have 'Template' attached. Will be set to $(basename -s .ext outputfile) if empty (default).
-
+      
+   -o string<br>
+    	&nbsp;&nbsp;&nbsp;name of output file. Defaults to name of template file excluding extension + '.go'.
+  
+   -p string<br>
+    	&nbsp;&nbsp;&nbsp;name of package to be used in generated code (default "main").
+    	
+   -t string<br>
+    	&nbsp;&nbsp;&nbsp;name of alternate code generation template file. If empty (default), then the embedded template will be used. Template variables supplied are: .Name, .Package, .Content
     	

@@ -25,14 +25,14 @@ var exp bool
 const embedtpl = "embed.tpl"
 
 func flagging() {
-	flag.StringVar(&pckg, "p", "main", "name of package to be used in generated code")
-	flag.StringVar(&outfilename, "o", "", "name of output file. Defaults to name of template file + '.go'")
+	flag.StringVar(&pckg, "p", "main", "name of package to be used in generated code.")
+	flag.StringVar(&outfilename, "o", "", "name of output file. Defaults to name of template file + '.go'.")
 	flag.StringVar(&functionname, "f", "", "name of generated, the template returning function. Its name will "+
 		"have 'Template' attached. Will be set to $(basename -s .ext outputfile) if empty (default).")
-	flag.StringVar(&tmplname, "t", "", "name of alternate code generation template file. If empty (default=, "+
+	flag.StringVar(&tmplname, "t", "", "name of alternate code generation template file. If empty (default), "+
 		"then the embedded template will be used. Template variables supplied are: .Name, .Package, .Content")
 	flag.BoolVar(&frmt, "n", false, "do not format the generated source. Default false means source will be formatted.")
-	flag.BoolVar(&exp, "e", false, "export the genrated, the template returning function. "+
+	flag.BoolVar(&exp, "e", false, "export the generated, the template returning function. "+
 		"Default (false) means the function will not be exported.")
 	flag.Parse()
 
