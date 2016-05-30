@@ -33,12 +33,20 @@ You may use `templify mytemplate.file` directly on the command line.
 ##Switches
 
 Usage of templify: `templify [switches] templatefilename`<br>
-  -o string<br>
-    	&nbsp;&nbsp;&nbsp;name of output file. Defaults to name of template file excluding extension + '.go'
-    	
-  -p string<br>
-    	&nbsp;&nbsp;&nbsp;name of package to be used in generated code (default "main")
+   -e	<br>
+      &nbsp;&nbsp;&nbsp;export the generated, the template returning function. Default (false) means the function will not be exported.
   
-  -n <br>
+   -n <br>
     	&nbsp;&nbsp;&nbsp;no formatting of the generated source. Default false means source will be formatted with gofmt.
+  
+   -o string<br>
+    	&nbsp;&nbsp;&nbsp;name of output file. Defaults to name of template file excluding extension + '.go'
+  
+   -p string<br>
+    	&nbsp;&nbsp;&nbsp;name of package to be used in generated code (default "main")
+    	
+   -t string<br>
+      &nbsp;&nbsp;&nbsp;
+    	name of generated, the template returning function. Its name will have 'Template' attached. Will be set to $(basename -s .ext outputfile) if empty (default).
+
     	
