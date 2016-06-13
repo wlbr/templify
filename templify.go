@@ -22,8 +22,6 @@ var tmplname string
 var frmt bool
 var exp bool
 
-const embedtpl = "embed.tpl"
-
 func flagging() {
 	flag.StringVar(&pckg, "p", "main", "name of package to be used in generated code.")
 	flag.StringVar(&outfilename, "o", "", "name of output file. Defaults to name of template file + '.go'.")
@@ -66,20 +64,6 @@ func readTemplifyTemplate(tplname string) (*template.Template, error) {
 	}
 	return tpl, err
 }
-
-const internalTemplate = "/*\n" +
-	"* CODE GENERATED AUTOMATICALLY WITH github.com/wlbr/templify\n" +
-	"* using the internal, hardcoded template.\n" +
-	"* THIS FILE SHOULD NOT BE EDITED BY HAND\n" +
-	"*/\n" +
-	"\n" +
-	"package {{.Pckg}}\n" +
-	"\n" +
-	"var {{.Tmplname}}tmpl = `{{.Tmplcontent}}`\n" +
-	"\n" +
-	"func {{.Tmplname}}Template() string {\n" +
-	"return {{.Tmplname}}tmpl\n" +
-	"}\n"
 
 func readTargetTemplate(tplname string) string {
 	tpl, err := ioutil.ReadFile(tplname)

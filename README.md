@@ -10,7 +10,7 @@ create the template.
 
 If you want to create a single file application, than the more handy solution with a 
 dedicated file is not desirable. On the other hand to edit a complex html template within 
-a Go string in the source is very unfomfortable. 
+a Go string in the source is very uncomfortable. 
 
 templify allows you to edit your template in an extra file and to generate an Go source
 file containing the embedded string.
