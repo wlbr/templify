@@ -1,5 +1,5 @@
 
-all: generate build
+all: build generate
 
 .PHONY: clean
 clean: 
@@ -12,7 +12,7 @@ clean:
 generate: embed.tpl
 	go generate templify.go
 
-build: templify.go embed.go generate
+build: templify.go embed.go 
 	go build templify.go embed.go
 
 	
