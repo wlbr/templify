@@ -1,21 +1,3 @@
-package main
-
-import (
-	"flag"
-	"fmt"
-	"errors"
-	"os"
-	"path"
-	"strings"
-	"io/ioutil"
-	"go/format"
-)
-
-
-
-//go:generate templify -p main -o embed.go embed.tpl
-
-
 /*
 templify
 A tool to be used with 'go generate' to embed external template files into Go code.
@@ -75,9 +57,26 @@ Usage of templify: `templify [switches] templatefilename`<br>
 
    -t string<br>
     	&nbsp;&nbsp;&nbsp;name of alternate code generation template file. If empty (default), then the embedded template will be used. Template variables supplied are: .Name, .Package, .Content
+*/
 
- */
 
+package main
+
+import (
+	"flag"
+	"fmt"
+	"errors"
+	"os"
+	"path"
+	"strings"
+	"io/ioutil"
+	"go/format"
+)
+
+
+
+
+//go:generate templify -p main -o embed.go embed.tpl
 
 
 
