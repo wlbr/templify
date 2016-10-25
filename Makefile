@@ -7,13 +7,14 @@ clean:
 	rm -f embed.go
 	rm -f templify
 	rm -f example/ex.go
+	rm -f examplte/templify
 
 
 generate: embed.tpl
 	echo generate
 	go generate templify.go
 
-build: templify.go embed.go 
+build: templify.go 
 	echo build
 	go build templify.go embed.go
 
