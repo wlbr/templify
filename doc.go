@@ -1,3 +1,5 @@
+package templify
+
 /*
 #templify
 A tool to be used with 'go generate' to embed external template files into Go code.
@@ -37,7 +39,7 @@ Usage of templify: `templify [switches] templatefilename`<br>
    -e	<br>
       &nbsp;&nbsp;&nbsp;export the generated, the template returning function. Default (false) means the function will not be exported.
 
-   -f <br>
+   package main-f <br>
     	&nbsp;&nbsp;&nbsp;no formatting of the generated source. Default false means source will be formatted with gofmt.
 
    -n string<br>
@@ -53,5 +55,5 @@ Usage of templify: `templify [switches] templatefilename`<br>
    -t string<br>
     	&nbsp;&nbsp;&nbsp;name of alternate code generation template file. If empty (default), then the embedded template will be used. Template variables supplied are: .Name, .Package, .Content
 
-
  */
+
