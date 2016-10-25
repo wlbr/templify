@@ -1,6 +1,5 @@
 
-// templify
-// A tool to be used with 'go generate' to embed external template files into Go code.
+// templify is a tool to be used with 'go generate' to embed external template files into Go code.
 //
 //
 // Scenario
@@ -17,11 +16,6 @@
 //
 // templify allows you to edit your template in an extra file and to generate an Go source
 // file containing the embedded string.
-//
-//
-// Installation
-//
-//    `go get github.com/wlbr/templify`
 //
 //
 // Usage

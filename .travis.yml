@@ -3,10 +3,7 @@ sudo: false
 go:
   - tip
 before_install:
-  - export PATH=".:${PATH}"
-  - make all
-  - cp templify example/
-  - make examples
   - go get github.com/mattn/goveralls
 script:
-#  - $HOME/gopath/bin/goveralls -service=travis-ci
+  - $HOME/gopath/bin/goveralls -service=travis-ci
+
