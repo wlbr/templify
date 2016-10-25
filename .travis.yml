@@ -5,7 +5,7 @@ go:
 before_install:
   - export PATH=".:${PATH}"
   - make all
-  - mv templify $HOME/gopath/bin/
+  - cp templify example/
   - make examples
   - go get github.com/mattn/goveralls
 script:
