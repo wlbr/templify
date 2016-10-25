@@ -1,4 +1,3 @@
-
 // templify is a tool to be used with 'go generate' to embed external template files into Go code.
 //
 //
@@ -50,10 +49,8 @@
 //
 //    -t string<br>
 //     	&nbsp;&nbsp;&nbsp;name of alternate code generation template file. If empty (default), then the embedded template will be used. Template variables supplied are: .Name, .Package, .Content
-
-
-
-package main
+//
+package main // import "github.com/wlbr/templify"
 
 //go:generate templify -p main -o embed.go embed.tpl
 
