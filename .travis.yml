@@ -3,7 +3,7 @@ sudo: false
 go:
   - tip
 before_install:
-  - export $path=.:$PATH
+  - export PATH=".:${PATH}
   - go get github.com/mattn/goveralls
   - make all
   - make examples
