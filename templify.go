@@ -24,9 +24,9 @@
 //
 // for each template you want to embed. Every time you run a 'go generate' in the
 // corresponding folder, the file 'mytemplate.go' will be created. It contains a
-// function `mytemplateTemplate` returning the template string.
+// function 'mytemplateTemplate' returning the template string.
 //
-// You may use `templify mytemplate.file` directly on the command line.
+// You may use 'templify mytemplate.file' directly on the command line.
 //
 //
 // Switches
