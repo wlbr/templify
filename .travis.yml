@@ -1,9 +1,11 @@
 language: go
 sudo: false
+git:
+  depth: 2
 go:
   - tip
 before_install:
   - go get github.com/mattn/goveralls
 script:
-  - $HOME/gopath/bin/goveralls -service=travis-ci
+  - $HOME/gopath/bin/goveralls -service=travis-ci && go test
 
