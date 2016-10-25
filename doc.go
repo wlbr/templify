@@ -1,4 +1,4 @@
-package templify
+package main
 
 /*
 #templify
