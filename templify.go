@@ -136,19 +136,19 @@ func readTargetTemplate(tplname string) string {
 }
 
 func formatFile(fname string) {
-	fstr, err := ioutil.ReadFile(outfilename)
+	fstr, err := ioutil.ReadFile(fname)
 	if err != nil {
-		fmt.Printf("Error reading generated file %s before passing it to gofmt.\n%v\n", outfilename, err)
+		fmt.Printf("Error reading generated file %s before passing it to gofmt.\n%v\n", fname, err)
 		os.Exit(1)
 	} else {
 		fstr, err = format.Source(fstr)
 		if err != nil {
-			fmt.Printf("Error running gofmt on the generated file '%s'\n%v\n", outfilename, err)
+			fmt.Printf("Error running gofmt on the generated file '%s'\n%v\n", fname, err)
 			os.Exit(1)
 		} else {
-			foutfile, err := os.Create(outfilename)
+			foutfile, err := os.Create(fname)
 			if err != nil {
-				fmt.Printf("Error creating formatted target file '%s'\n%v\n", outfilename, err)
+				fmt.Printf("Error creating formatted target file '%s'\n%v\n", fname, err)
 				os.Exit(1)
 			} else {
 				defer foutfile.Close()
