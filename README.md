@@ -19,7 +19,6 @@ file containing the embedded string.
    `go get github.com/wlbr/templify`
 
 ## Usage
-
 Simply add a line 
 
    `//go:generate templify mytemplate.file`
@@ -31,7 +30,6 @@ function `mytemplateTemplate` returning the template string.
 You may use `templify mytemplate.file` directly on the command line.
 
 ## Switches
-
 Usage of templify: `templify [switches] templatefilename`<br>
    -e	<br>
       &nbsp;&nbsp;&nbsp;export the generated, the template returning function. Default (false) means the function will not be exported.
