@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -41,4 +42,10 @@ func TestFormatFile(t *testing.T) {
 		fmt.Printf("Formatted file '%s' differs from gold standard.\n", fname)
 		t.Fail()
 	}
+}
+
+func TestFlagging(t *testing.T) {
+
+	flag.Set("p", "test")
+	flagging()
 }

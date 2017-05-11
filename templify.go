@@ -92,12 +92,6 @@ func flagging() {
 		"Default (false) means the function will not be exported.")
 	flag.Parse()
 
-	inputfile = flag.Arg(0)
-	if inputfile == "" {
-		fmt.Println(errors.New("No template file given as argument."))
-		os.Exit(1)
-	}
-
 	if outfilename == "" {
 		indir := path.Dir(inputfile)
 		inext := path.Ext(path.Base(inputfile))
@@ -160,6 +154,12 @@ func formatFile(fname string) {
 
 func main() {
 	flagging()
+
+	inputfile = "" //flag.Arg(0)
+	if inputfile == "" {
+		fmt.Println(errors.New("No template file given as argument."))
+		os.Exit(1)
+	}
 
 	var tpl *template.Template
 	var err error
