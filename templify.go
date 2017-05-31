@@ -155,7 +155,7 @@ func formatFile(fname string) {
 func main() {
 	flagging()
 
-	inputfile = "" //flag.Arg(0)
+	inputfile = flag.Arg(0)
 	if inputfile == "" {
 		fmt.Println(errors.New("No template file given as argument."))
 		os.Exit(1)
