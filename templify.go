@@ -56,7 +56,7 @@
 //       the embedded template will be used. Template variables supplied are:
 //       .Name, .Package, .Content
 //
-package main // import "github.com/wlbr/templify"
+package main
 
 //go:generate templify -p main -o embed.go embed.tpl
 
