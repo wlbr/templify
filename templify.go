@@ -56,7 +56,7 @@
 //       the embedded template will be used. Template variables supplied are:
 //       .Name, .Package, .Content
 //
-package main // import "github.com/wlbr/templify"
+package main
 
 //go:generate templify -p main -o embed.go embed.tpl
 
@@ -155,7 +155,7 @@ func formatFile(fname string) {
 func main() {
 	flagging()
 
-	inputfile = "" //flag.Arg(0)
+	inputfile = flag.Arg(0)
 	if inputfile == "" {
 		fmt.Println(errors.New("No template file given as argument."))
 		os.Exit(1)
