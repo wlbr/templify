@@ -6,8 +6,8 @@
 
 package {{.Package}}
 
-// {{.Name}} is a generated function returning the template as a string.
-// That string should be parsed by the functions of the template package.
+// {{.Name}}Template is a generated function returning the template as a string.
+// That string should be parsed by the functions of the golang's template package.
 func {{.Name}}Template() string {
 	var tmpl = "{{.Content}}"
 	return tmpl

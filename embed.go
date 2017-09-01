@@ -6,8 +6,8 @@
 
 package main
 
-// embed is a generated function returning the template as a string.
-// That string should be parsed by the functions of the template package.
+// embedTemplate is a generated function returning the template as a string.
+// That string should be parsed by the functions of the golang's template package.
 func embedTemplate() string {
 	var tmpl = "/*\n" +
 		" * CODE GENERATED AUTOMATICALLY WITH\n" +
@@ -17,8 +17,8 @@ func embedTemplate() string {
 		"\n" +
 		"package {{.Package}}\n" +
 		"\n" +
-		"// {{.Name}} is a generated function returning the template as a string.\n" +
-		"// That string should be parsed by the functions of the template package.\n" +
+		"// {{.Name}}Template is a generated function returning the template as a string.\n" +
+		"// That string should be parsed by the functions of the golang's template package.\n" +
 		"func {{.Name}}Template() string {\n" +
 		"\tvar tmpl = \"{{.Content}}\"\n" +
 		"\treturn tmpl\n" +
