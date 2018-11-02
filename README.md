@@ -53,6 +53,6 @@ Usage of templify: `templify [switches] templatefilename`<br>
 ## Code
 * Documentation: https://godoc.org/github.com/wlbr/templify
 * Lint: http://go-lint.appspot.com/github.com/wlbr/templify
-* Continous Integration: [![Travis Status](https://api.travis-ci.org/wlbr/templify.svg?branch=master)](https://travis-ci.org/wlbr/templify)
+* Continous Integration: [![Travis Status](https://api.travis-ci.com/wlbr/templify.svg?branch=master)](https://travis-ci.com/wlbr/templify)
 * Test Coverage: [![Coverage Status](https://coveralls.io/repos/github/wlbr/templify/badge.svg?branch=master)](https://coveralls.io/github/wlbr/templify?branch=master)
 * Metrics: [![GoReportCard](https://goreportcard.com/badge/github.com/wlbr/templify)](https://goreportcard.com/report/github.com/wlbr/templify)
