@@ -6,6 +6,8 @@
 
 package main
 
+// exTemplate is a generated function returning the template as a string.
+// That string should be parsed by the functions of the golang's template package.
 func exTemplate() string {
 	var tmpl = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
 		"\n" +
