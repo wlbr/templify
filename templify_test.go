@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -46,6 +45,26 @@ func TestFormatFile(t *testing.T) {
 
 func TestFlagging(t *testing.T) {
 
-	flag.Set("p", "test")
+	args := []string{"-p", "testpackage", "/my/path/testfile.tpl"}
+	os.Args = append(os.Args, args...)
 	flagging()
+	if pckg != "testpackage" {
+		fmt.Printf("package flag was not as expected.  'pckg=%s'", pckg)
+		t.Fail()
+	}
+
+	if inputfile != "/my/path/testfile.tpl" {
+		fmt.Printf("inputfile flag was not as expected.  'inputfile=%s'", inputfile)
+		t.Fail()
+	}
+	if outfilename != "/my/path/testfile.go" {
+		fmt.Printf("output filename not correctly determined.  'outfilename=%s'", inputfile)
+		t.Fail()
+	}
+
+	if functionname != "testfile" {
+		fmt.Printf("functionname not correctly determined.  'functionname=%s'", inputfile)
+		t.Fail()
+	}
+	fmt.Println()
 }
