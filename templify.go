@@ -94,7 +94,7 @@ func flagging() {
 
 	inputfile = flag.Arg(0)
 	if inputfile == "" {
-		fmt.Println(errors.New("No template file given as argument."))
+		fmt.Println(errors.New("no template file given as argument"))
 		os.Exit(1)
 	}
 
