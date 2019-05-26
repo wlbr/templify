@@ -130,7 +130,7 @@ func readTargetTemplate(tplname string) string {
 		os.Exit(1)
 	}
 
-	r := strings.NewReplacer("\"", "\\\"", "\n", "\\n\" +\n\t\"", "\t", "\\t")
+	r := strings.NewReplacer("\"", "\\\"", "\n", "\\n\" +\n\t\"", "\t", "\\t", "\r", "\\r", "\\", "\\\\")
 	return r.Replace(string(tpl))
 
 }
