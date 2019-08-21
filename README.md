@@ -8,7 +8,7 @@ dedicated file and to read this file at runtime from your application. Or you ad
 "big" string containing the template to the source of your app and parse this string to 
 create the template.
 
-If you want to create a single file application, than the more handy solution with a 
+If you want to create a single file application, then the more handy solution with a 
 dedicated file is not desirable. On the other hand to edit a complex html template within 
 a Go string in the source is very uncomfortable. 
 
