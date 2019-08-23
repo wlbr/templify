@@ -23,7 +23,7 @@ jobs:
         #    curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
         #    dep ensure
         #fi
-        make generate
+        #make generate
 
     - name: Build
       run: #go build -v .
